@@ -1,0 +1,67 @@
+services:
+  db:
+    image: mysql:8.4
+    command: --mysql-native-password=ON
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: wordpress
+    volumes:
+      - dcf_wp_db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$${MYSQL_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  wordpress:
+    image: wordpress:latest
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DEBUG: "1"
+      WORDPRESS_CONFIG_EXTRA: |
+        define( 'WP_DEBUG_LOG', true );
+        define( 'WP_DEBUG_DISPLAY', false );
+        define( 'SCRIPT_DEBUG', true );
+    volumes:
+      - dcf_wp_html:/var/www/html
+      - ./.docker/wordpress.htaccess:/var/www/html/.htaccess
+      - ./.docker/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./.docker/apache-large-uploads.conf:/etc/apache2/conf-enabled/dcf-large-uploads.conf
+      - ./.docker/upload-tmp:/tmp/dcf-uploads
+      - ./.docker/mu-plugins:/var/www/html/wp-content/mu-plugins
+      - ./:/var/www/html/wp-content/themes/namm-organic
+
+  wpcli:
+    image: wordpress:cli
+    depends_on:
+      db:
+        condition: service_healthy
+      wordpress:
+        condition: service_started
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - dcf_wp_html:/var/www/html
+      - ./.docker/wordpress.htaccess:/var/www/html/.htaccess
+      - ./.docker/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./.docker/upload-tmp:/tmp/dcf-uploads
+      - ./.docker/mu-plugins:/var/www/html/wp-content/mu-plugins
+      - ./:/var/www/html/wp-content/themes/namm-organic
+    user: "33:33"
+
+volumes:
+  dcf_wp_db:
+  dcf_wp_html:

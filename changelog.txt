@@ -1,0 +1,79 @@
+*** Namm Organic WordPress Theme Changelog ***
+
+Version 1.1.2
+
+    * portfolio security updated
+    * Compatible with latest WordPress Version
+    * Compatible with latest WordPress Version
+
+Version 1.1.1
+
+    * Fixed: Minor Bugs 
+    * Compatible with latest Elementor Version
+    * Compatible with latest WordPress Version
+
+Version 1.1.0
+
+    * Fixed: Notice Errors
+    * Compatible with latest Elementor Version
+    * Compatible with latest WordPress Version
+   
+Version 1.0.9
+
+    * OCDI Demo Import option added 
+    * Compatible with latest Elementor Version
+    * Compatible with latest WordPress Version
+    * Fixed : Deprecated and Warnings errors
+
+Version 1.0.8
+
+    * Added: Global Template option For Single Product Pages 
+    * Compatible with latest Elementor Version
+    * Compatible with latest WordPress Version
+
+Version 1.0.7
+
+    * Fixed : Warnings and deprecated errors
+    * Compatible with latest Elementor Version
+    * Compatible with latest WordPress Version
+
+Version 1.0.6
+
+    * Fixed : Warnings and deprecated errors
+    * Compatible with latest Elementor Version
+    * Compatible with latest WordPress Version
+
+Version 1.0.5
+
+    * Compatible: Latest WordPress Version    
+    * Compatible: Latest Elementor  Version
+    * Importer source updated
+    * Fixed: Bulk plugin installation error
+    * Fixed: Minor bugs
+
+Version 1.0.4
+
+    * Compatible with WordPress 6.3.2
+    * Compatible with latest Elementor version
+    * Unyson plugin source Updated
+
+
+Version 1.0.3
+
+    * Fixed: Portfolio Plugin Elementor Deprecated error
+    * Fixed: Elementor Addon Plugin Elementor Deprecated error
+
+Version 1.0.2
+
+    * Compatible with WordPress 6.2
+    * Compatible with latest WooCommerce versions
+    * Compatible with PHP 8.1 version
+    * Updated: All premium plugins
+
+Version 1.0.1
+
+    * Demo content added
+
+Version 1.0.0
+
+    * First release!

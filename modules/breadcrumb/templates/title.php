@@ -1,0 +1,2 @@
+<?php
+echo apply_filters( 'namm_organic_breadcrumb_get_template_part', namm_organic_get_template_part( 'breadcrumb', 'templates/title-content', '',namm_organic_breadcrumb_params() ), namm_organic_get_page_id() ); ?>
