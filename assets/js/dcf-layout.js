@@ -49,6 +49,56 @@
 		});
 	}
 
+	function setupProductCarousels($scope) {
+		$scope.find('.elementor-widget-wdt-shop-products ul.products.products-apply-isotope:not(.swiper-wrapper)').each(function() {
+			var $track = $(this);
+			var $container = $track.closest('.wdt-products-container');
+
+			if ($.fn.isotope && $track.data('isotope')) {
+				$track.isotope('destroy');
+			}
+
+			$track
+				.addClass('dcf-product-carousel-track')
+				.css({
+					height: '',
+					position: '',
+					overflow: ''
+				});
+
+			$track.children('li.product').css({
+				position: '',
+				left: '',
+				top: '',
+				transform: ''
+			});
+
+			if (!$container.length || $container.hasClass('dcf-product-carousel-ready')) {
+				return;
+			}
+
+			$container.addClass('dcf-product-carousel-ready');
+			$container.prepend('<button class="dcf-product-carousel-nav dcf-product-carousel-prev" type="button" aria-label="Previous products">&lsaquo;</button>');
+			$container.append('<button class="dcf-product-carousel-nav dcf-product-carousel-next" type="button" aria-label="Next products">&rsaquo;</button>');
+		});
+	}
+
+	function moveProductCarousel($button, direction) {
+		var $container = $button.closest('.dcf-product-carousel-ready');
+		var track = $container.find('.dcf-product-carousel-track').get(0);
+		var firstItem = $container.find('li.product.product-grid-view').get(0);
+		var distance = firstItem ? firstItem.getBoundingClientRect().width + 24 : 0;
+
+		if (!track) {
+			return;
+		}
+
+		track.scrollBy({
+			left: distance * direction,
+			behavior: 'smooth'
+		});
+	}
+
 	function refreshMasonry($scope) {
 		if (!$.fn.isotope) {
 			return;
@@ -89,6 +139,7 @@
 		window.clearTimeout(refreshTimer);
 		refreshTimer = window.setTimeout(function() {
 			stabilizeProductGrids($scope);
+			setupProductCarousels($scope);
 			refreshMasonry($scope);
 			refreshSwipers($scope);
 		}, 80);
@@ -106,12 +157,22 @@
 		refreshLayout(document);
 	});
 
+	$(document).on('click', '.dcf-product-carousel-nav', function() {
+		moveProductCarousel($(this), $(this).hasClass('dcf-product-carousel-next') ? 1 : -1);
+	});
+
 	$(document).on('elementor/frontend/init', function() {
 		if (window.elementorFrontend && window.elementorFrontend.hooks) {
 			window.elementorFrontend.hooks.addAction('frontend/element_ready/global', function($scope) {
 				refreshLayout($scope);
 			});
 		}
+	});
+
+	$(window).on('load', function() {
+		window.setTimeout(function() {
+			refreshLayout(document);
+		}, 1100);
 	});
 
 	window.dcfRefreshLayout = refreshLayout;
